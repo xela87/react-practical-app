@@ -1,0 +1,19 @@
+.page__wrapper {
+    margin-top: 25px;
+    margin-bottom: 25px;
+    display: flex;
+    justify-content: center;
+}
+.page {
+    padding: 10px;
+    border: 1px solid teal;
+    cursor: pointer;
+    margin-right: 10px;
+}
+.page__current {
+    color: aliceblue;
+    padding: 10px;
+    background: #016969;
+    font-weight: bold;
+    margin-right: 10px;
+}
