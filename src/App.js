@@ -1,27 +1,32 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import './styles/App.css'
-import Posts from "./pages/Posts";
-import {BrowserRouter, Redirect, Route, Switch} from "react-router-dom";
-import About from "./pages/About";
+import {BrowserRouter} from "react-router-dom";
 import Navbar from "./components/UI/Navbar/Navbar";
-import ComponentsSimple from "./pages/ComponentsSimple";
-import Error from "./pages/Error";
+import AppRouter from "./components/AppRouter";
+import {AuthContext} from "./context";
 
 function App() {
+    const [isAuth, setIsAuth] = useState(false)
+    const [isLoading, setLoading] = useState(true)
+    useEffect(() => {
+        if (localStorage.getItem('auth')) {
+            setIsAuth(true)
+        }
+        setLoading(false)
+    }, [])
+
     return (
         <div className="App">
-            <hr style={{margin: "15px 0"}}/>
-            <BrowserRouter>
-                <Navbar />
-                <Switch>
-                    <Route path="/comps"><ComponentsSimple/></Route>
-                    <Route path="/posts"><Posts /></Route>
-                    <Route path="/about"><About /></Route>
-                    <Route path="/error"><Error /></Route>
-                    <Redirect to="/error"/>
-                </Switch>
-            </BrowserRouter>
-
+            <AuthContext.Provider value={{
+                isAuth,
+                setIsAuth,
+                isLoading,
+            }}>
+                <BrowserRouter>
+                    <Navbar/>
+                    <AppRouter/>
+                </BrowserRouter>
+            </AuthContext.Provider>
         </div>
     );
 }
